@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="MySQL - dbtelecom@localhost" uuid="45ca89c7-6e33-49e8-896f-a1dee5981f70">
+    <database-info product="MySQL" version="5.7.9-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="dbtelecom"/>
+    <table name="avaliable_options" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="tarif_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="options_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="tarif_id,options_id"/>
+      <foreign-key name="fk_options_av" columns="options_id" ref-table="options" ref-schema="" ref-catalog="dbtelecom" ref-columns="options_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_tarif_options" columns="tarif_id" ref-table="tarif" ref-schema="" ref-catalog="dbtelecom" ref-columns="tarif_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_options_av" unique="false" columns="options_id"/>
+      <index name="fk_tarif_opt" unique="false" columns="tarif_id"/>
+    </table>
+    <table name="client" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="client_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="family" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="berthdate" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="passport" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="adress" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="client_id"/>
+      <exported-key name="fk_client" table="contract" schema="" catalog="dbtelecom" columns="client_id"/>
+    </table>
+    <table name="contract" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="contract_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="phone_num" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="client_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tarif_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="contract_id"/>
+      <foreign-key name="fk_client" columns="client_id" ref-table="client" ref-schema="" ref-catalog="dbtelecom" ref-columns="client_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_tarif" columns="tarif_id" ref-table="tarif" ref-schema="" ref-catalog="dbtelecom" ref-columns="tarif_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_contract_options" table="contract_options" schema="" catalog="dbtelecom" columns="contract_id"/>
+      <exported-key name="fk_contract" table="tarif" schema="" catalog="dbtelecom" columns="contract_id"/>
+      <index name="fk_client" unique="false" columns="client_id"/>
+      <index name="fk_tarif" unique="false" columns="tarif_id"/>
+    </table>
+    <table name="contract_options" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="contract_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="options_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="contract_id,options_id"/>
+      <foreign-key name="fk_contract_options" columns="contract_id" ref-table="contract" ref-schema="" ref-catalog="dbtelecom" ref-columns="contract_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="fk_options" columns="options_id" ref-table="options" ref-schema="" ref-catalog="dbtelecom" ref-columns="options_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="fk_contract_o" unique="false" columns="contract_id"/>
+      <index name="fk_options" unique="false" columns="options_id"/>
+    </table>
+    <table name="options" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="options_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="conect_cost" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="options_id"/>
+      <exported-key name="fk_options_av" table="avaliable_options" schema="" catalog="dbtelecom" columns="options_id"/>
+      <exported-key name="fk_options" table="contract_options" schema="" catalog="dbtelecom" columns="options_id"/>
+    </table>
+    <table name="tarif" schema="" catalog="dbtelecom" type="TABLE">
+      <column name="tarif_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="price" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="contract_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="tarif_id"/>
+      <foreign-key name="fk_contract" columns="contract_id" ref-table="contract" ref-schema="" ref-catalog="dbtelecom" ref-columns="contract_id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="fk_tarif_options" table="avaliable_options" schema="" catalog="dbtelecom" columns="tarif_id"/>
+      <exported-key name="fk_tarif" table="contract" schema="" catalog="dbtelecom" columns="tarif_id"/>
+      <index name="fk_contract" unique="false" columns="contract_id"/>
+    </table>
+  </data-source>
+</component>
